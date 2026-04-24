@@ -1,16 +1,3 @@
 {
-  "name": "certifyeasy-nextjs",
-  "version": "0.1.0",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "env": {
-    "DATABASE_URL": "your_url_here"
-  }
-  "framework": "nextjs",
-  "regions": ["iad1"],
-  "functions": {
-    "api/**": {
-      "maxDuration": 60
-    }
-  }
+  "version": 2
 }
