@@ -1,4 +1,5 @@
 import CertificateSearch from '@/components/CertificateSearch';
+import TrackPageView from '@/components/TrackPageView';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
@@ -49,19 +50,10 @@ const stats = [
   { value: '99.9%', label: 'Uptime Guaranteed' },
 ];
 
-import { useEffect } from 'react';
-
 export default function Home() {
-  useEffect(() => {
-    fetch('/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path: '/' }),
-    }).catch(console.error);
-  }, []);
-
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900">
+      <TrackPageView />
       {/* ── Navbar ── */}
       <nav className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
