@@ -9,7 +9,25 @@ const nextConfig: NextConfig = {
         source: '/',
         destination: '/Certificates',
         basePath: false,
-        permanent: false, // Use false if this might change, or true if permanent
+        permanent: false,
+      },
+      {
+        source: '/admin/:path*',
+        destination: '/Certificates/admin/:path*',
+        basePath: false,
+        permanent: false,
+      },
+      {
+        source: '/verify/:path*',
+        destination: '/Certificates/verify/:path*',
+        basePath: false,
+        permanent: false,
+      },
+      {
+        source: '/api/:path*',
+        destination: '/Certificates/api/:path*',
+        basePath: false,
+        permanent: false,
       },
     ];
   },
