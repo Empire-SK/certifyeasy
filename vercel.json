@@ -1,0 +1,15 @@
+{
+  "name": "certifyeasy-nextjs",
+  "version": "0.1.0",
+  "description": "Certificate management application built with Next.js",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "env": [],
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "functions": {
+    "api/**": {
+      "maxDuration": 60
+    }
+  }
+}

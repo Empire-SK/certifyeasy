@@ -1,0 +1,10 @@
+.env.local
+.env.*.local
+.next
+dist
+node_modules
+npm-debug.log
+yarn-error.log
+.DS_Store
+README.md
+VERCEL_DEPLOYMENT.md
