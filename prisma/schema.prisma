@@ -35,3 +35,17 @@ model IssuerProfile {
   address     String @default("123 Tech Avenue, Silicon Valley, CA")
   description String @default("A global leader in secure digital credentialing and verification services.")
 }
+
+model PageView {
+  id        String   @id @default(uuid())
+  path      String
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+model VerificationLog {
+  id            String   @id @default(uuid())
+  certificateId String
+  success       Boolean
+  createdAt     DateTime @default(now())
+}

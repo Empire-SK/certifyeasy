@@ -30,6 +30,8 @@ interface StatsData {
   weeklyData: number[];
   recentCerts: { name: string; certificateId: string; eventName: string; createdAt: string }[];
   eventGroups: { eventName: string; _count: { _all: number } }[];
+  totalViews: number;
+  totalLookups: number;
 }
 
 interface IssuerProfile {
@@ -131,19 +133,19 @@ function AnalyticsView() {
           positive: true,
         },
         {
-          label: 'Recent (5)',
-          value: Math.min(stats.totalCerts, 5).toString(),
-          icon: <Search className="text-purple-600" />,
-          bg: 'bg-purple-50',
-          trend: 'latest entries',
+          label: 'Website Views',
+          value: stats.totalViews.toLocaleString(),
+          icon: <Globe className="text-emerald-600" />,
+          bg: 'bg-emerald-50',
+          trend: 'all time',
           positive: true,
         },
         {
-          label: 'Unique Events',
-          value: stats.eventGroups.length.toString(),
-          icon: <Users className="text-green-600" />,
-          bg: 'bg-green-50',
-          trend: 'event types',
+          label: 'Verifications',
+          value: stats.totalLookups.toLocaleString(),
+          icon: <Search className="text-purple-600" />,
+          bg: 'bg-purple-50',
+          trend: 'lookups',
           positive: true,
         },
         {

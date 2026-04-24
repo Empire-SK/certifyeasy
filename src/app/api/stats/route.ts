@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 
 export async function GET() {
   try {
-    const [totalCerts, recentCerts, eventGroups] = await Promise.all([
+    const [totalCerts, recentCerts, eventGroups, totalViews, totalLookups] = await Promise.all([
       prisma.certificate.count(),
       prisma.certificate.findMany({
         orderBy: { createdAt: 'desc' },
@@ -16,6 +16,8 @@ export async function GET() {
         orderBy: { _count: { certificateId: 'desc' } },
         take: 5,
       }),
+      prisma.pageView.count(),
+      prisma.verificationLog.count(),
     ]);
 
     const now = new Date();
@@ -38,6 +40,8 @@ export async function GET() {
       recentCerts,
       eventGroups,
       weeklyData,
+      totalViews,
+      totalLookups,
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Error fetching stats';

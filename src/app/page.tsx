@@ -49,7 +49,17 @@ const stats = [
   { value: '99.9%', label: 'Uptime Guaranteed' },
 ];
 
+import { useEffect } from 'react';
+
 export default function Home() {
+  useEffect(() => {
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: '/' }),
+    }).catch(console.error);
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900">
       {/* ── Navbar ── */}

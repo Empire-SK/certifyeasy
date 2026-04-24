@@ -12,6 +12,11 @@ export async function GET(
       where: { certificateId },
     });
 
+    // Log the attempt asynchronously (don't block the response)
+    prisma.verificationLog.create({
+      data: { certificateId, success: !!certificate }
+    }).catch(console.error);
+
     if (!certificate) {
       return NextResponse.json(
         { message: 'Certificate not found' },
