@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "env": [],
+  "env": {
+    "DATABASE_URL": "your_url_here"
+  }
   "framework": "nextjs",
   "regions": ["iad1"],
   "functions": {
