@@ -44,9 +44,9 @@ const features = [
 ];
 
 const stats = [
-  { value: '1,284+', label: 'Certificates Issued' },
-  { value: '8,400+', label: 'Verifications Done' },
-  { value: '42', label: 'Active Organizations' },
+  { value: '64+', label: 'Certificates Issued' },
+  { value: '20+', label: 'Verifications Done' },
+  { value: '1', label: 'Active Organizations' },
   { value: '99.9%', label: 'Uptime Guaranteed' },
 ];
 
