@@ -2,6 +2,7 @@ import CertificateSearch from '@/components/CertificateSearch';
 import TrackPageView from '@/components/TrackPageView';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import prisma from '@/lib/prisma';
 import {
   ShieldCheck,
   Zap,
@@ -43,14 +44,22 @@ const features = [
   },
 ];
 
-const stats = [
-  { value: '64+', label: 'Certificates Issued' },
-  { value: '20+', label: 'Verifications Done' },
-  { value: '1', label: 'Active Organizations' },
-  { value: '99.9%', label: 'Uptime Guaranteed' },
-];
+export default async function Home() {
+  const [certificatesCount, verificationsCount, activeOrgsCount] = await Promise.all([
+    prisma.certificate.count(),
+    prisma.verificationLog.count(),
+    prisma.issuerProfile.count(),
+  ]);
 
-export default function Home() {
+  const formatNumber = (num: number) => new Intl.NumberFormat('en-US').format(num);
+
+  const stats = [
+    { value: formatNumber(certificatesCount), label: 'Certificates Issued' },
+    { value: formatNumber(verificationsCount), label: 'Verifications Done' },
+    { value: formatNumber(Math.max(1, activeOrgsCount)), label: 'Active Organizations' },
+    { value: '99.9%', label: 'Uptime Guaranteed' },
+  ];
+
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900">
       <TrackPageView />
@@ -104,7 +113,7 @@ export default function Home() {
             </p>
 
             {/* Search Card */}
-            <div className="mx-auto mt-12 max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-100">
+            <div id="search" className="mx-auto mt-12 max-w-xl rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-100">
               <div className="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400">
                 <Search className="h-4 w-4" />
                 Certificate Lookup
@@ -220,7 +229,7 @@ export default function Home() {
                 No signup required. Just enter the certificate ID and get results in real time.
               </p>
               <Link
-                href="/"
+                href="#search"
                 className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-sm font-bold text-blue-700 shadow-lg transition hover:scale-105 hover:shadow-xl"
               >
                 Verify a Certificate <ArrowRight className="h-4 w-4" />
