@@ -42,7 +42,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search') ?? '';
-    const take = parseInt(searchParams.get('take') ?? '50', 10);
+    const takeParam = searchParams.get('take');
+    const take = takeParam ? parseInt(takeParam, 10) : undefined;
 
     const certificates = await prisma.certificate.findMany({
       where: search

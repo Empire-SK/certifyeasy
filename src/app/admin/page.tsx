@@ -531,11 +531,21 @@ function CertificatesListView() {
   const [certificates, setCertificates] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
 
-  const fetchCertificates = useCallback(async () => {
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
+  const fetchCertificates = useCallback(async (searchQuery = '') => {
     setLoading(true);
     try {
-      const res = await fetch('/api/certificates');
+      const url = searchQuery ? `/api/certificates?search=${encodeURIComponent(searchQuery)}` : '/api/certificates';
+      const res = await fetch(url);
       if (res.ok) setCertificates(await res.json());
     } finally {
       setLoading(false);
@@ -543,11 +553,11 @@ function CertificatesListView() {
   }, []);
 
   useEffect(() => {
-    fetchCertificates();
-    const handleUploadSuccess = () => fetchCertificates();
+    fetchCertificates(debouncedSearch);
+    const handleUploadSuccess = () => fetchCertificates(debouncedSearch);
     window.addEventListener('certificates-uploaded', handleUploadSuccess);
     return () => window.removeEventListener('certificates-uploaded', handleUploadSuccess);
-  }, [fetchCertificates]);
+  }, [fetchCertificates, debouncedSearch]);
 
   const handleDelete = async (certificateId: string) => {
     if (!confirm('Are you sure you want to delete this certificate?')) return;
@@ -568,10 +578,20 @@ function CertificatesListView() {
 
   return (
     <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden animate-in fade-in duration-500">
-      <div className="p-8 border-b border-gray-50 flex items-center justify-between">
+      <div className="p-8 border-b border-gray-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold text-gray-900">Issued Certificates</h2>
           <p className="text-sm text-gray-500 mt-1">Manage all certificates currently in the database.</p>
+        </div>
+        <div className="relative">
+          <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input 
+            type="text" 
+            placeholder="Search certificates..." 
+            className="pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 w-full sm:w-64"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
       </div>
       <div className="overflow-x-auto">
