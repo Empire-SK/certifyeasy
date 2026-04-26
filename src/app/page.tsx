@@ -40,7 +40,7 @@ const features = [
   {
     icon: Globe,
     title: 'Globally Trusted',
-    description: 'Used by 42+ organizations across 18 countries to issue verified credentials.',
+    description: 'Trusted by organizations worldwide to issue and verify digital credentials.',
     color: 'text-emerald-600',
     bg: 'bg-emerald-50',
   },
