@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     'Verify digital certificates instantly. Trusted by organizations worldwide for secure, blockchain-ready credential verification.',
 };
 
+export const dynamic = 'force-dynamic';
+
 const features = [
   {
     icon: ShieldCheck,
